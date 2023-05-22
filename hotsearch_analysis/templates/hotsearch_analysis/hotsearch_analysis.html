@@ -1,0 +1,60 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block body-content %}
+<div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <h4>{{days}}近期热点</h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>热搜事件</th>
+                <th>上榜时间</th>
+                <th>态势评分</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if hotsearch_items %}
+              {% for item in hotsearch_items %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{item.title}}</td>
+                <td>{{item.time}}</td>
+                <td>{{item.sa_value}}</td>
+                <td>    
+                    <div class="project-edit-delete">
+                      <a href="/hotsearch_analysis/details/{{item.id}}/" title="事件分析">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                          <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                          <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                        </svg>
+                      </a>
+                      <a href="#" title="深入探查" onclick="trace_hotsearch({{item.id}}, {{request.user.id}})">
+                        <svg t="1669689369065" class="bi bi-eye-fill" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor">
+                            <path d="M663.006587 602.400314l-32.11848 0-12.063745-12.080118c40.177008-44.250786 64.278915-104.586905 64.278915-168.934382 0-144.831451-116.607671-261.4381-261.439123-261.4381-144.787449 0-261.386934 116.606648-261.386934 261.4381 0 144.831451 116.598462 261.387958 261.386934 261.387958 64.390455 0 124.725551-24.09372 168.993733-64.279938l12.011556 12.081141 0 32.162482 201.112213 201.051838 60.32691-60.335096L663.006587 602.400314zM421.664154 602.400314c-100.589875 0-181.021662-80.43281-181.021662-181.014499 0-100.641041 80.43281-181.014499 181.021662-181.014499 100.624668 0 181.005289 80.373458 181.005289 181.014499C602.669443 521.967504 522.288822 602.400314 421.664154 602.400314">
+                            </path>
+                        </svg>
+
+
+                      </a>
+                    </div>
+                  </td>
+              </tr>
+              {% endfor %}
+              {%endif%}
+            </tbody>
+          </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block custom-script%}
+<script src="{%static 'hotsearch_analysis/js/hotsearch_analysis.js' %}"></script>
+<script src="{%static 'js/alert.js' %}"></script>
+
+{% endblock %}
